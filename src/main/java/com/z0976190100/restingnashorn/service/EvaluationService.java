@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.script.*;
 
 @Component
-public class NashEngine {
+public class EvaluationService {
 
     public String consumeScript(String userScript) {
         return scriptEvaluator(userScript);
@@ -36,7 +36,7 @@ public class NashEngine {
 
         } catch (ScriptException e) {
             e.printStackTrace();
-            return "error";
+            return "ERROR: " + e.getMessage();
         }
 
     }
