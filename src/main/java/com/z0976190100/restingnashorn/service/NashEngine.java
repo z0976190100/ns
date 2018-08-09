@@ -1,35 +1,45 @@
 package com.z0976190100.restingnashorn.service;
 
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.springframework.stereotype.Component;
 
 import javax.script.*;
-import java.io.*;
 
-import static com.z097619100.resting_nashorn.service.ScriptModifier.modifyScript;
-
+@Component
 public class NashEngine {
 
+    public String consumeScript(String userScript) {
+        return scriptEvaluator(userScript);
+    }
 
-    public static void main(String[] args) throws ScriptException {
+    private String scriptEvaluator(String userScript) {
 
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-            String script =
-                    "var greeting ='hello world';" +
-                    "print(greeting);" +
-                    "var fucking = 'fucking';" +
-                    "print(greeting);" +
-                    "print(fucking);" +
-                            "fucking";
-        Compilable comp = (Compilable) engine;
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+        String script =
+                "var greeting ='hello world';" +
+                        "print(greeting);" +
+                        "var fucking = 'fucking';" +
+                        "print(greeting);" +
+                        "print(fucking);" +
+                        "fucking";
 
-        CompiledScript cs =  comp.compile(script);
+        try {
+
+            Compilable comp = (Compilable) engine;
+
+            CompiledScript cs = comp.compile(userScript);
 
 
 //           script = modifyScript(script,"print");
 
             Object result = cs.eval();
+            return String.valueOf(result);
 
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            return "error";
         }
+
     }
+}
 
 

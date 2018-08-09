@@ -1,0 +1,1 @@
+script:var greeting ='hello world';print(greeting);var fucking = 'fucking';print(greeting);print(fucking);fucking;
