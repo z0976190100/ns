@@ -1,8 +1,6 @@
 package com.z0976190100.restingnashorn.service;
 
-import com.z0976190100.restingnashorn.persistence.entity.UserScript;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +13,7 @@ public class RegistrationService {
     // setting priority, if not defined in request,
     // adding to queue on evaluation
 
-    public String  register(UserScript script){
+    public String  register(ClientScript script){
 
         return String.valueOf(id++);
 //        script.setId(1);

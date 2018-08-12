@@ -5,19 +5,24 @@ import java.util.List;
 
 public class ProcessorState {
 
-    private long processorId;
+    private int processorId;
     private List<String> consoleLog = new ArrayList<>();
-    private Object result ;
+    private Object result;
+    private boolean evalDone;
 
     public ProcessorState() {
     }
 
-    public ProcessorState(long processorId) {
+    public ProcessorState(int processorId) {
         this.processorId = processorId;
     }
 
     public void log(Object o){
         consoleLog.add(String.valueOf(o));
+    }
+
+    public long getProcessorId() {
+        return processorId;
     }
 
     public List<String> getConsoleLog() {
@@ -34,5 +39,17 @@ public class ProcessorState {
 
     public void setResult(Object result) {
         this.result = result;
+    }
+
+    public void setProcessorId(int processorId) {
+        this.processorId = processorId;
+    }
+
+    public boolean isEvalDone() {
+        return evalDone;
+    }
+
+    public void setEvalDone(boolean evalDone) {
+        this.evalDone = evalDone;
     }
 }

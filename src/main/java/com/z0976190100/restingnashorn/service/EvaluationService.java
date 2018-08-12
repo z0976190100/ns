@@ -16,10 +16,12 @@ public class EvaluationService {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
         String script =
                 "var greeting ='hello world';" +
-                        "print(greeting);" +
+                        "for(var i = 0; i < 500; i++){" +
+                        "print(greeting + '  ' + i);};" +
                         "var fucking = 'fucking';" +
                         "print(greeting);" +
-                        "print(fucking);" +
+                        "for(var i = 0; i < 500; i++){" +
+                        "print(fucking + '  ' + i);};" +
                         "fucking";
 
         try {

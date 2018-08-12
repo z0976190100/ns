@@ -3,20 +3,26 @@ package com.z0976190100.restingnashorn.persistence.entity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserScript {
+public class ClientScript {
 
-    private long id;
+    private int id;
     private int priority;
     private String tapestry;
 
-    public UserScript() {
+
+    public ClientScript() {
     }
 
-    public long getId() {
+    public ClientScript(String tapestry, int id){
+        this.tapestry = tapestry;
+        this.id = id;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,4 +41,6 @@ public class UserScript {
     public void setTapestry(String tapestry) {
         this.tapestry = tapestry;
     }
+
+
 }

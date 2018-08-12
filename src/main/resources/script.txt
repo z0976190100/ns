@@ -1,1 +1,3 @@
 script:var greeting ='hello world';print(greeting);var fucking = 'fucking';print(greeting);print(fucking);fucking;
+
+var greeting ='hello world';for(var i = 0; i < 500; i++){print(greeting + '  ' + i);};var fucking = 'fucking';print(greeting);for(var i = 0; i < 500; i++){print(fucking + '  ' + i);};fucking;
