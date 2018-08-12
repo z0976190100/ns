@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -21,7 +21,7 @@ public class ResultController {
     ResultController(ResultService resultService){
         this.resultService = resultService;
     }
-    @GetMapping("/script/result/{id}")
+    @PostMapping("/script/result/{id}")
     public ResponseEntity<ProcessorState> getResult(@PathVariable(value = "id") int id){
 
         return ResponseEntity.ok().body(resultService.getResult(id));

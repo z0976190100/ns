@@ -13,7 +13,7 @@ public class ProcessorManagerService {
 
 
     public void launchProcessor(int id) {
-        ClientScript clientScript = scriptsToProceed.get(id);
+        ClientScript clientScript = scriptsToProceed.get(id-1);
         Processor processor1 = new Processor(clientScript, "nashorn");
         processorList.add(processor1);
         Thread thread1 = new Thread(processor1);
