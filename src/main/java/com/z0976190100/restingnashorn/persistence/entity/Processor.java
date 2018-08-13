@@ -15,7 +15,7 @@ public class Processor implements Runnable {
 
     public Processor(ClientScript clientScript, String engineType) {
         this.id = clientScript.getId();
-        processorState = new ProcessorState(id);
+        this.processorState = new ProcessorState(id);
         this.engine = new ScriptEngineManager().getEngineByName(engineType);
         this.clientScript = clientScript;
     }

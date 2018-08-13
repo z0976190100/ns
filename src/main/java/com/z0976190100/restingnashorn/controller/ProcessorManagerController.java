@@ -46,8 +46,7 @@ public class ProcessorManagerController {
 
         ProcessorState processorState = processorManagerService.killProcessor(id);
 
-        if (processorState != null)
-            return ResponseEntity.status(200).body(processorState);
-        return ResponseEntity.notFound().build();
+        return processorState != null ? ResponseEntity.status(200).body(processorState) : ResponseEntity.notFound().build();
+
     }
 }
