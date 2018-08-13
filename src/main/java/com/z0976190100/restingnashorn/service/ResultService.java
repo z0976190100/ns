@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
 
+// TODO: is getResult() good enough?
+
 @Service
 public class ResultService {
 

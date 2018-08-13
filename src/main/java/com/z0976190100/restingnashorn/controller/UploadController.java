@@ -23,10 +23,9 @@ import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
  * which will be defined in <code>UploadService</code>
  **/
 
-//TODO: registration of script
-//TODO: queueing of script - scriptsToProceed and scriptsProceeding sets - no priority, LILO
-//TODO: prioritized queuing - based on client defined priority
+//TODO: prioritized queuing - based on client-defined priority
 //TODO:
+
 @Controller
 public class UploadController {
 
@@ -41,7 +40,7 @@ public class UploadController {
     }
 
     @PostMapping("/script")
-    public String uploadClientScript(@RequestParam(name = "script", defaultValue = "return 0;") String ascript,
+    public String uploadClientScript(@RequestParam(name = "script") String ascript,
                                      @RequestParam(name = "async", defaultValue = "false") boolean async) {
 
         ClientScript clientScript = uploadService.buildScript(ascript);

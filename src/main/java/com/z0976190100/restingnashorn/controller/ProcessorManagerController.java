@@ -1,10 +1,7 @@
 package com.z0976190100.restingnashorn.controller;
 
-import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
-import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import com.z0976190100.restingnashorn.service.ProcessorManagerService;
-import com.z0976190100.restingnashorn.util.AppVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * Controller is responsible for launching a thread
  * for script processing:
- * # limitation of number of threads (default: 2)
+ * # limitation of number of threads (default: 2) ???
  * # defining of engine type and options
  * # modifications of script body,
  * # evaluation.

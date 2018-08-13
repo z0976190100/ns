@@ -1,7 +1,5 @@
 package com.z0976190100.restingnashorn.controller;
 
-
-import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import com.z0976190100.restingnashorn.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
