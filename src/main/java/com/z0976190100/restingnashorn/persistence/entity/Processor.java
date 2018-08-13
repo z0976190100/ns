@@ -14,8 +14,8 @@ public class Processor implements Runnable {
     private Thread thread;
 
     public Processor(ClientScript clientScript, String engineType) {
-        processorState = new ProcessorState(id);
         this.id = clientScript.getId();
+        processorState = new ProcessorState(id);
         this.engine = new ScriptEngineManager().getEngineByName(engineType);
         this.clientScript = clientScript;
     }
@@ -24,17 +24,36 @@ public class Processor implements Runnable {
     public void run() {
 
         try {
-            String scriptTapestry = clientScript.getTapestry();
+            String scriptTapestry = modifyScriptTapestry(clientScript.getTapestry(), "print");
             engine.put("console", processorState);
             Object result = String.valueOf(engine.eval(scriptTapestry));
             processorState.setResult(result);
             processorState.setEvalDone(true);
-            notifyAll();
+//            doNotifyAll();
         } catch (ScriptException e) {
             processorState.log(e.getMessage());
             processorState.setEvalDone(true);
             e.printStackTrace();
         }
+    }
+
+    public String modifyScriptTapestry(String auserScript, String inCase) {
+
+        String modScript = null;
+
+        switch (inCase) {
+
+            case "print":
+
+                modScript = "var console;" + auserScript;
+
+                modScript = modScript.replace("print", "console.log");
+
+                break;
+            default:
+                break;
+        }
+        return modScript;
     }
 
     public ProcessorState getProcessorState() {

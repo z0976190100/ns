@@ -11,7 +11,7 @@ import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 public class UploadService {
 
     public ClientScript buildScript(String ascript) {
-        return new ClientScript();
+        return new ClientScript(ascript);
     }
 
     // LILO variant of

@@ -12,12 +12,11 @@ public class AppVariables {
 
     //TODO: scriptsToProceed to HashSet
     //TODO: thread-safe collections?
-    
-    public int scriptId;
 
-    volatile public static List<Processor> processorList = new ArrayList<>();
+    // application-scoped list of all processors
+    volatile public static List<Processor> processorsList = new ArrayList<>();
 
     // application-scoped LILO queue of received scripts to proceed
-   volatile public static List<ClientScript> scriptsToProceed = new ArrayList<>();
+    volatile public static List<ClientScript> scriptsToProceed = new ArrayList<>();
 
 }

@@ -4,26 +4,37 @@ import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import org.springframework.stereotype.Service;
 
-import static com.z0976190100.restingnashorn.util.AppVariables.processorList;
+import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
 
 @Service
 public class ResultService {
 
+    public ProcessorState getResult(int id) {
+        return postOnResultPending(id);
+    }
 
-   synchronized public ProcessorState getResult(int id) {
+    public ProcessorState postOnResultPending(int id) {
 
-        if (!processorList.isEmpty()) {
-            for (Processor processor : processorList)
+        if (!processorsList.isEmpty()) {
+            for (Processor processor : processorsList)
                 if (processor.getId() == id) {
+
+                    try {
+                        processor.getThread().join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+/*
                    while (!processor.getProcessorState().isEvalDone()){
 
                        try {
                            wait();
                        } catch (InterruptedException e) {
                            e.printStackTrace();
-                           return processor.getProcessorState();
                        }
                    }
+*/
+                    return processor.getProcessorState();
                 }
         }
         return null;

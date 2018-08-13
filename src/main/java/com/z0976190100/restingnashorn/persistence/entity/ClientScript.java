@@ -1,8 +1,5 @@
 package com.z0976190100.restingnashorn.persistence.entity;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class ClientScript {
 
     private int id;
@@ -10,12 +7,8 @@ public class ClientScript {
     private String tapestry;
 
 
-    public ClientScript() {
-    }
-
-    public ClientScript(String tapestry, int id){
+    public ClientScript(String tapestry){
         this.tapestry = tapestry;
-        this.id = id;
     }
 
     public int getId() {

@@ -5,7 +5,7 @@ import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import org.springframework.stereotype.Component;
 
-import static com.z0976190100.restingnashorn.util.AppVariables.processorList;
+import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
 import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 
 @Component
@@ -13,20 +13,28 @@ public class ProcessorManagerService {
 
 
     public void launchProcessor(int id) {
-        ClientScript clientScript = scriptsToProceed.get(id-1);
-        Processor processor1 = new Processor(clientScript, "nashorn");
-        processorList.add(processor1);
-        Thread thread1 = new Thread(processor1);
-        processor1.setThread(thread1);
-        thread1.start();
+
+        if(!scriptsToProceed.isEmpty()) {
+            for (ClientScript cs : scriptsToProceed) {
+                if (cs.getId() == id) {
+
+                    Processor processor1 = new Processor(cs, "nashorn");
+                    processorsList.add(processor1);
+                    Thread thread1 = new Thread(processor1);
+                    processor1.setThread(thread1);
+                    thread1.start();
+                }
+            }
+        }
     }
 
     public ProcessorState killProcessor(int id) {
 
-        if (!processorList.isEmpty()) {
-            for (Processor processor : processorList) {
+        if (!processorsList.isEmpty()) {
+            for (Processor processor : processorsList) {
                 if (processor.getId() == id) {
-                    processor.getThread().destroy();
+                    //processor.getThread().notifyAll();
+                    processor.getThread().interrupt();
                     return processor.getProcessorState();
                 }
 

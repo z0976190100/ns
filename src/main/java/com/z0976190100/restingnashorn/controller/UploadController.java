@@ -1,12 +1,16 @@
 package com.z0976190100.restingnashorn.controller;
 
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
-import com.z0976190100.restingnashorn.service.RegistrationService;
+import com.z0976190100.restingnashorn.service.ProcessorManagerService;
 import com.z0976190100.restingnashorn.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 
 /**
  * <code>UploadController</code> is responsible for proceeding http requests
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * For clear, convenient and controllable management of script lifecycle in app,
  * registration and queuing is provided.
  * For managing of script it got to have <code>id</code>,
- * which will be defined in <code>RegistrationService</code>
+ * which will be defined in <code>UploadService</code>
  **/
 
 //TODO: registration of script
@@ -27,23 +31,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UploadController {
 
     private UploadService uploadService;
+    private ProcessorManagerService processorManagerService;
 
     @Autowired
-    UploadController(UploadService uploadService) {
+    UploadController(UploadService uploadService,
+                     ProcessorManagerService processorManagerService) {
         this.uploadService = uploadService;
+        this.processorManagerService = processorManagerService;
     }
 
     @PostMapping("/script")
-    public String uploadClientScript(@RequestParam(name = "script", defaultValue = "return 0;") String ascript) {
+    public String uploadClientScript(@RequestParam(name = "script", defaultValue = "return 0;") String ascript,
+                                     @RequestParam(name = "async", defaultValue = "false") boolean async) {
 
         ClientScript clientScript = uploadService.buildScript(ascript);
         uploadService.registerScript(clientScript);
 
-        // UserScript userScript = new UserScript(auserScript, id);
-        //ProcessorState processorState = engineDispatcherService.runEval(userScript);
+        if (async) {
+            processorManagerService.launchProcessor(clientScript.getId());
+            return "forward:/asyncscript/" + clientScript.getId();
+        }
 
         return "forward:/script/eval/" + clientScript.getId();
     }
 
+    @PostMapping("/asyncscript/{id}")
+    public ResponseEntity<Object> asyncTrue(@PathVariable(name = "id") int id) {
+
+        if (!scriptsToProceed.isEmpty()) {
+            for (ClientScript cs : scriptsToProceed) {
+                if (cs.getId() == id)
+                    return ResponseEntity.accepted().body("script evaluation scheduled. script id for state/result request = " + id);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
