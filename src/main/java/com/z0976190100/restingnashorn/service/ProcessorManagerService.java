@@ -3,21 +3,21 @@ package com.z0976190100.restingnashorn.service;
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
 import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 
-@Component
+@Service
 public class ProcessorManagerService {
 
 
     public void launchProcessor(int id) {
 
         if(!scriptsToProceed.isEmpty()) {
+
             for (ClientScript cs : scriptsToProceed) {
                 if (cs.getId() == id) {
-
                     Processor processor1 = new Processor(cs, "nashorn");
                     processorsList.add(processor1);
                     Thread thread1 = new Thread(processor1);
@@ -37,7 +37,6 @@ public class ProcessorManagerService {
                     processor.getThread().interrupt();
                     return processor.getProcessorState();
                 }
-
             }
         }
         return null;

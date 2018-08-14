@@ -1,8 +1,6 @@
 package com.z0976190100.restingnashorn.service;
 
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
-import com.z0976190100.restingnashorn.util.AppVariables;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
@@ -17,7 +15,7 @@ public class UploadService {
     // LILO variant of
     public ClientScript registerScript(ClientScript clientScript) {
 
-       scriptsToProceed.add(clientScript);
+        scriptsToProceed.add(clientScript);
         int id = scriptsToProceed.size();
         clientScript.setId(id);
 

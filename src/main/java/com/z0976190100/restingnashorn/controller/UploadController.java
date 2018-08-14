@@ -4,11 +4,16 @@ import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.service.ProcessorManagerService;
 import com.z0976190100.restingnashorn.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 
@@ -31,6 +36,7 @@ public class UploadController {
 
     private UploadService uploadService;
     private ProcessorManagerService processorManagerService;
+    private URI location;
 
     @Autowired
     UploadController(UploadService uploadService,
@@ -48,6 +54,11 @@ public class UploadController {
 
         if (async) {
             processorManagerService.launchProcessor(clientScript.getId());
+            location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(clientScript.getId())
+                    .toUri();
             return "forward:/asyncscript/" + clientScript.getId();
         }
 
@@ -60,10 +71,18 @@ public class UploadController {
         if (!scriptsToProceed.isEmpty()) {
             for (ClientScript cs : scriptsToProceed) {
                 if (cs.getId() == id)
-                    return ResponseEntity.accepted().body("script evaluation scheduled. script id for state/result request = " + id);
+
+                    return ResponseEntity.created(location).build(); //body("script evaluation scheduled. script id for state||result request = " + id);
             }
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/script/{id}")
+    public String checkState(@PathVariable(name = "id") int id) {
+
+        return "forward:/script/state/" + id;
+
     }
 
 }

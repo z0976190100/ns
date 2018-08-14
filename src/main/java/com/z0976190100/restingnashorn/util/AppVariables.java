@@ -2,17 +2,18 @@ package com.z0976190100.restingnashorn.util;
 
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.persistence.entity.Processor;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+
 public class AppVariables {
 
     //TODO: scriptsToProceed to HashSet
     //TODO: thread-safe collections?
 
+    // restriction of script processing threads
+    //public static int processorsNumber = 2;
     // application-scoped list of all processors
     volatile public static List<Processor> processorsList = new ArrayList<>();
 
