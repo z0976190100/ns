@@ -1,12 +1,7 @@
 # resting-nashorn
 Backend javascript code evaluation, executing by Nashorn JVM engine.
 
-
-**API reference**
-----
-***Upload Client Script*** 
--
-Uploads client script. There is two scenarios of client interaction with backend: syncronized and async.
+Application provides two scenarios of client interaction with backend: syncronized and async.
 
 In syncronized scenario request returns json data with console output, process id, results of evaluation of client script.
 
@@ -20,6 +15,12 @@ Note: errors of script during evaluation are assumed as result of evaluation and
 json.
  
 
+
+**API reference**
+----
+***Upload Client Script*** 
+-
+Uploads client script. 
 * **URL**
 
   /script
