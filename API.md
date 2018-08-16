@@ -19,7 +19,7 @@ json.
 **API reference**
 ----
 ***Upload Client Script*** 
--
+----
 Uploads client script. 
 * **URL**
 
@@ -43,20 +43,23 @@ Uploads client script.
 
 sync case:
   * **Code:** 200 <br />
-    **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`
+    **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`<br />
     
 async case:
   * **Code:** 201 <br />
   * **Headers:** Location: URL/script/1 <br />
  
-* **Error Response:**
+* **Error Response:** <br />
 
   * **Code:** 404 NOT FOUND <br />
  
-  ***Get State of Script Evaluation*** 
--
+ 
+ 
+  ***Get State of Script Evaluation*** <br />
+----
 
 * **URL**
+
   /script/:id
 or
   /script/state/:id
@@ -82,9 +85,8 @@ or
 
   * **Code:** 404 NOT FOUND <br />
   
-
  ***Get Results of Script Evaluation*** 
--
+----
 
 * **URL**
   
@@ -111,6 +113,35 @@ or
 
   * **Code:** 404 NOT FOUND <br />
   
+ ***Emergency shutdown of Script Evaluation*** 
+  ----
+  You can brutaly interrupt a particular script evaluation process.
+  
+  * **URL**
+    
+    /script/kill/:id
+  
+  * **Method:**
+  
+    `POST`
+    
+  *  **URL Params**
+  
+     none
+  
+  * **Data Params**
+  
+    none
+  
+  * **Success Response:**
+  
+    * **Code:** 200 <br />
+    * **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`
+       
+  * **Error Response:**
+  
+    * **Code:** 404 NOT FOUND <br />
+    
 
 
 
