@@ -28,8 +28,9 @@ import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
  * which will be defined in <code>UploadService</code>
  **/
 
-//TODO: prioritized queuing - based on client-defined priority
+//TODO: prioritized queuing - based on client-defined priority?
 //TODO: scheduler for script management
+//TODO: queuing forced by limitation of threads number
 
 @Controller
 public class UploadController {

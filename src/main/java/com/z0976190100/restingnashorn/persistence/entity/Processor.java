@@ -4,6 +4,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.AFTER_EVALUATION;
+import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.ERROR_OF_EVALUATION;
+import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.PROCESSING_EVALUATION;
+
 
 public class Processor implements Runnable {
 
@@ -26,11 +30,14 @@ public class Processor implements Runnable {
         try {
             String scriptTapestry = modifyScriptTapestry(clientScript.getTapestry(), "print");
             engine.put("console", processorState);
+            clientScript.setStage(PROCESSING_EVALUATION);
             Object result = String.valueOf(engine.eval(scriptTapestry));
+            clientScript.setStage(AFTER_EVALUATION);
             processorState.setResult(result);
             processorState.setEvalDone(true);
 //            doNotifyAll();
         } catch (ScriptException e) {
+            clientScript.setStage(ERROR_OF_EVALUATION);
             processorState.log(e.getMessage());
             processorState.setEvalDone(true);
             e.printStackTrace();
