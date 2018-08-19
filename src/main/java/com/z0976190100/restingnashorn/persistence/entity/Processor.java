@@ -4,6 +4,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import java.util.concurrent.Future;
+
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.AFTER_EVALUATION;
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.ERROR_OF_EVALUATION;
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.PROCESSING_EVALUATION;
@@ -15,7 +17,9 @@ public class Processor implements Runnable {
     private ScriptEngine engine;
     private ClientScript clientScript;
     private ProcessorState processorState;
-    private Thread thread;
+    private Future task;
+   // private Thread thread;
+
 
     public Processor(ClientScript clientScript, String engineType) {
         this.id = clientScript.getId();
@@ -95,11 +99,12 @@ public class Processor implements Runnable {
         this.processorState = processorState;
     }
 
-    public Thread getThread() {
-        return thread;
+
+    public Future getTask() {
+        return task;
     }
 
-    public void setThread(Thread thread) {
-        this.thread = thread;
+    public void setTask(Future task) {
+        this.task = task;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.IN_QUEUE;
 import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
@@ -37,7 +38,7 @@ public class ProcessorManagerService {
                     Processor processor1 = new Processor(cs, "nashorn");
                     processorsList.add(processor1);
                     processor1.getClientScript().setStage(IN_QUEUE);
-                    processorsFixedPool.submit(processor1);
+                    processor1.setTask(processorsFixedPool.submit(processor1));
 //                    Thread thread1 = new Thread(processor1);
 //                    processor1.setThread(thread1);
 //                    thread1.start();
@@ -52,7 +53,7 @@ public class ProcessorManagerService {
             for (Processor processor : processorsList) {
                 if (processor.getId() == id) {
                     //processor.getThread().notifyAll();
-                    processor.getThread().stop();
+                    processor.getTask().cancel(true);
                     return processor.getProcessorState();
                 }
             }

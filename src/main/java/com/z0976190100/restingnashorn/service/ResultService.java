@@ -4,7 +4,10 @@ import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
+import static java.lang.Thread.sleep;
 
 // TODO: is getResult() good enough?
 
@@ -22,20 +25,13 @@ public class ResultService {
                 if (processor.getId() == id) {
 
                     try {
-                        processor.getThread().join();
-                    } catch (InterruptedException e) {
+                        while (processor.getTask().get() != null) {
+                            sleep(100);
+                        }
+//                        processor.getThread().join();
+                    } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
-/*
-                   while (!processor.getProcessorState().isEvalDone()){
-
-                       try {
-                           wait();
-                       } catch (InterruptedException e) {
-                           e.printStackTrace();
-                       }
-                   }
-*/
                     return processor.getProcessorState();
                 }
         }

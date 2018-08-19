@@ -10,9 +10,6 @@ import java.util.List;
 
 public class AppVariables {
 
-
-    // restriction of script processing threads
-    //public static int processorsNumber = 2;
     // application-scoped list of all processors
     public static List<Processor> processorsList = Collections.synchronizedList(new ArrayList<>());
 
