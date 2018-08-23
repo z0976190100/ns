@@ -6,19 +6,17 @@ import org.springframework.stereotype.Service;
 import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
 
 @Service
-public class UploadService {
+public class ScriptManagerService {
 
     public ClientScript buildScript(String ascript) {
         return new ClientScript(ascript);
     }
 
-    // LILO variant of
-    public ClientScript registerScript(ClientScript clientScript) {
+    public void registerScript(ClientScript clientScript) {
 
         scriptsToProceed.add(clientScript);
         int id = scriptsToProceed.size();
         clientScript.setId(id);
 
-        return clientScript;
     }
 }

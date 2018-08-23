@@ -3,42 +3,29 @@ package com.z0976190100.restingnashorn.service;
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
-import com.z0976190100.restingnashorn.persistence.entity.ScriptStage;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.Optional;
 
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.IN_QUEUE;
-import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
-import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
+import static com.z0976190100.restingnashorn.util.AppVariables.*;
 
 @Service
 public class ProcessorManagerService {
 
-    static {
-        bootstrapEnvironment(4);
-    }
-
-    private static ExecutorService processorsFixedPool;
-
-    private static void bootstrapEnvironment(int processorsNumber){
-         processorsFixedPool = Executors.newFixedThreadPool(processorsNumber);
-
-    }
 
 
+//TODO: remove launched scripts?
     public void launchProcessor(int id) {
 
-        if(!scriptsToProceed.isEmpty()) {
-
+        if (!scriptsToProceed.isEmpty()) {
+// TODO: clone() for ClientScript, to pass clone to processors?
             for (ClientScript cs : scriptsToProceed) {
                 if (cs.getId() == id) {
-                    Processor processor1 = new Processor(cs, "nashorn");
-                    processorsList.add(processor1);
-                    processor1.getClientScript().setStage(IN_QUEUE);
-                    processor1.setTask(processorsFixedPool.submit(processor1));
+                    Processor processor = new Processor(cs, "nashorn");
+                    processorsList.add(processor);
+                    processor.getProcessorState().setScriptStage(IN_QUEUE);
+                    processor.setTask(processorsFixedPool.submit(processor));
 //                    Thread thread1 = new Thread(processor1);
 //                    processor1.setThread(thread1);
 //                    thread1.start();
@@ -47,9 +34,22 @@ public class ProcessorManagerService {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public ProcessorState killProcessor(int id) {
 
-        if (!processorsList.isEmpty()) {
+        Optional<ProcessorState> targetProcessorState =
+                processorsList.stream()
+                        .filter(el -> el.getId() == id)
+                        .peek(el -> {
+                            el.getTask().cancel(true);
+                        })
+                        .peek(el -> el.getThread().stop())
+                        .map(Processor::getProcessorState)
+                        .findFirst();
+
+        return targetProcessorState.orElse(null);
+
+      /*  if (!processorsList.isEmpty()) {
             for (Processor processor : processorsList) {
                 if (processor.getId() == id) {
                     //processor.getThread().notifyAll();
@@ -59,5 +59,6 @@ public class ProcessorManagerService {
             }
         }
         return null;
+    }*/
     }
 }

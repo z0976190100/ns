@@ -4,6 +4,7 @@ import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
@@ -29,7 +30,7 @@ public class ResultService {
                             sleep(100);
                         }
 //                        processor.getThread().join();
-                    } catch (ExecutionException | InterruptedException e) {
+                    } catch (ExecutionException | InterruptedException | CancellationException e) {
                         e.printStackTrace();
                     }
                     return processor.getProcessorState();

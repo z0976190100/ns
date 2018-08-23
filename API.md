@@ -43,7 +43,7 @@ Uploads client script.
 
 sync case:
   * **Code:** 200 <br />
-    **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`<br />
+    **Content:** `{ processingScriptId : 1, scriptConsoleLog : [], result : [], evalDone : []; }`<br />
     
 async case:
   * **Code:** 201 <br />
@@ -79,7 +79,7 @@ or
 * **Success Response:**
 
   * **Code:** 200 <br />
-  * **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`
+  * **Content:** `{ processingScriptId : 1, scriptConsoleLog : [], result : [], evalDone : []; }`
      
 * **Error Response:**
 
@@ -107,7 +107,7 @@ or
 * **Success Response:**
 
   * **Code:** 200 <br />
-  * **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`
+  * **Content:** `{ processingScriptId : 1, scriptConsoleLog : [], result : [], evalDone : []; }`
      
 * **Error Response:**
 
@@ -136,7 +136,7 @@ or
   * **Success Response:**
   
     * **Code:** 200 <br />
-    * **Content:** `{ processorId : 1, consoleLog : [], result : [], evalDone : []; }`
+    * **Content:** `{ processingScriptId : 1, scriptConsoleLog : [], result : [], evalDone : []; }`
        
   * **Error Response:**
   

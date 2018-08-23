@@ -18,7 +18,7 @@ public class Processor implements Runnable {
     private ClientScript clientScript;
     private ProcessorState processorState;
     private Future task;
-   // private Thread thread;
+    private Thread thread;
 
 
     public Processor(ClientScript clientScript, String engineType) {
@@ -32,23 +32,28 @@ public class Processor implements Runnable {
     public void run() {
 
         try {
+            thread = Thread.currentThread();
             String scriptTapestry = modifyScriptTapestry(clientScript.getTapestry(), "print");
             engine.put("console", processorState);
-            clientScript.setStage(PROCESSING_EVALUATION);
+            processorState.setScriptStage(PROCESSING_EVALUATION);
             Object result = String.valueOf(engine.eval(scriptTapestry));
-            clientScript.setStage(AFTER_EVALUATION);
+            processorState.setScriptStage(AFTER_EVALUATION);
             processorState.setResult(result);
             processorState.setEvalDone(true);
 //            doNotifyAll();
         } catch (ScriptException e) {
-            clientScript.setStage(ERROR_OF_EVALUATION);
+            processorState.setScriptStage(ERROR_OF_EVALUATION);
             processorState.log(e.getMessage());
             processorState.setEvalDone(true);
             e.printStackTrace();
+            // just for fun
+        } catch (ThreadDeath e) {
+            System.err.println("------- OUCH!!!------");
+            throw new ThreadDeath();
         }
     }
 
-    public String modifyScriptTapestry(String auserScript, String inCase) {
+    private String modifyScriptTapestry(String auserScript, String inCase) {
 
         String modScript = null;
 
@@ -58,7 +63,7 @@ public class Processor implements Runnable {
 
                 modScript = "var console;" + auserScript;
 
-                modScript = modScript.replace("print", "console.log");
+                modScript = modScript.replace("print(", "console.log(");
 
                 break;
             default:
@@ -99,6 +104,13 @@ public class Processor implements Runnable {
         this.processorState = processorState;
     }
 
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
 
     public Future getTask() {
         return task;

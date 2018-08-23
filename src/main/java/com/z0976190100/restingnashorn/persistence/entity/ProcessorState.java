@@ -5,32 +5,34 @@ import java.util.List;
 
 public class ProcessorState {
 
-    private int processorId;
-    private List<String> consoleLog = new ArrayList<>();
+    private int processingScriptId;
+    private ScriptStage scriptStage;
+    private List<String> scriptConsoleLog = new ArrayList<>();
     private Object result;
     private boolean evalDone;
+
 
     public ProcessorState() {
     }
 
-    public ProcessorState(int processorId) {
-        this.processorId = processorId;
+    public ProcessorState(int processingScriptId) {
+        this.processingScriptId = processingScriptId;
     }
 
     public void log(Object o){
-        consoleLog.add(String.valueOf(o));
+        scriptConsoleLog.add(String.valueOf(o));
     }
 
-    public long getProcessorId() {
-        return processorId;
+    public long getProcessingScriptId() {
+        return processingScriptId;
     }
 
-    public List<String> getConsoleLog() {
-        return consoleLog;
+    public List<String> getScriptConsoleLog() {
+        return scriptConsoleLog;
     }
 
-    public void setConsoleLog(List<String> consoleLog) {
-        this.consoleLog = consoleLog;
+    public void setScriptConsoleLog(List<String> scriptConsoleLog) {
+        this.scriptConsoleLog = scriptConsoleLog;
     }
 
     public Object getResult() {
@@ -41,8 +43,8 @@ public class ProcessorState {
         this.result = result;
     }
 
-    public void setProcessorId(int processorId) {
-        this.processorId = processorId;
+    public void setProcessingScriptId(int processingScriptId) {
+        this.processingScriptId = processingScriptId;
     }
 
     public boolean isEvalDone() {
@@ -51,5 +53,13 @@ public class ProcessorState {
 
     public void setEvalDone(boolean evalDone) {
         this.evalDone = evalDone;
+    }
+
+    public ScriptStage getScriptStage() {
+        return scriptStage;
+    }
+
+    public void setScriptStage(ScriptStage scriptStage) {
+        this.scriptStage = scriptStage;
     }
 }

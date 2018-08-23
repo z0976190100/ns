@@ -2,12 +2,10 @@ package com.z0976190100.restingnashorn.controller;
 
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.service.ProcessorManagerService;
-import com.z0976190100.restingnashorn.service.UploadService;
+import com.z0976190100.restingnashorn.service.ScriptManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,21 +26,19 @@ import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
  * which will be defined in <code>UploadService</code>
  **/
 
-//TODO: prioritized queuing - based on client-defined priority?
-//TODO: scheduler for script management
-//TODO: queuing forced by limitation of threads number
+// TODO: get all scripts ids mapping
 
 @Controller
-public class UploadController {
+public class ScriptManagerController {
 
-    private UploadService uploadService;
+    private ScriptManagerService scriptManagerService;
     private ProcessorManagerService processorManagerService;
     private URI location;
 
     @Autowired
-    UploadController(UploadService uploadService,
-                     ProcessorManagerService processorManagerService) {
-        this.uploadService = uploadService;
+    ScriptManagerController(ScriptManagerService scriptManagerService,
+                            ProcessorManagerService processorManagerService) {
+        this.scriptManagerService = scriptManagerService;
         this.processorManagerService = processorManagerService;
     }
 
@@ -50,8 +46,8 @@ public class UploadController {
     public String uploadClientScript(@RequestParam(name = "script") String ascript,
                                      @RequestParam(name = "async", defaultValue = "false") boolean async) {
 
-        ClientScript clientScript = uploadService.buildScript(ascript);
-        uploadService.registerScript(clientScript);
+        ClientScript clientScript = scriptManagerService.buildScript(ascript);
+        scriptManagerService.registerScript(clientScript);
 
         if (async) {
             processorManagerService.launchProcessor(clientScript.getId());
@@ -77,13 +73,6 @@ public class UploadController {
             }
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/script/{id}")
-    public String checkState(@PathVariable(name = "id") int id) {
-
-        return "forward:/script/state/" + id;
-
     }
 
 }
