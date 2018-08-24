@@ -6,14 +6,15 @@ import com.z0976190100.restingnashorn.service.ScriptManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-
-import static com.z0976190100.restingnashorn.util.AppVariables.scriptsToProceed;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * <code>UploadController</code> is responsible for proceeding http requests
@@ -50,7 +51,7 @@ public class ScriptManagerController {
         scriptManagerService.registerScript(clientScript);
 
         if (async) {
-            processorManagerService.launchProcessor(clientScript.getId());
+            processorManagerService.launchScriptProcessing(clientScript.getId());
             location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}")
@@ -63,16 +64,35 @@ public class ScriptManagerController {
     }
 
     @PostMapping("/asyncscript/{id}")
-    public ResponseEntity<Object> asyncTrue(@PathVariable(name = "id") int id) {
+    public ResponseEntity<Object> asyncTrue(@PathVariable(name = "id") int id,
+                                            @PathVariable(name = "async") boolean async) {
 
-        if (!scriptsToProceed.isEmpty()) {
-            for (ClientScript cs : scriptsToProceed) {
-                if (cs.getId() == id)
+        if (async) {
+            Optional<ClientScript> targetClientScript = scriptManagerService.getScriptById(id);
 
-                    return ResponseEntity.created(location).build(); //body("script evaluation scheduled. script id for state||result request = " + id);
-            }
+            if (targetClientScript.isPresent())
+                return ResponseEntity.created(location).build(); //body("script evaluation scheduled. script id for state||result request = " + id);
+
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/script/{id}")
+    public ResponseEntity<ClientScript> getScript(@RequestParam(name = "id") int id) {
+
+        Optional<ClientScript> targetClientScript = scriptManagerService.getScriptById(id);
+
+        if (targetClientScript.isPresent())
+            return ResponseEntity.created(location).build();
+
         return ResponseEntity.notFound().build();
+    }
+
+
+    @GetMapping("/script/all")
+    public ResponseEntity<List<ClientScript>> getAllScripts() {
+        return ResponseEntity.ok(scriptManagerService.getAllscripts());
     }
 
 }

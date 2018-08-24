@@ -5,9 +5,8 @@ import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
-import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
+import static com.z0976190100.restingnashorn.util.PseudoDB.processorsList;
 
 @Service
 public class ProcessorStateService {
@@ -21,12 +20,7 @@ public class ProcessorStateService {
                         .findFirst();
 
         return targetProcessorState.orElse(null);
-//
-//        if (!processorsList.isEmpty()) {
-//            for (Processor processor : processorsList){
-//                if(processor.getId() == id) return processor.getProcessorState();
-//            }
-//        }
+
     }
 
 }

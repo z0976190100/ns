@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
- * Controller is responsible for launching a thread
+ * Controller is responsible for launching a task
  * for script processing:
- * # limitation of number of threads (default: 2) ???
  * # defining of engine type and options
  * # modifications of script body,
  * # evaluation.
@@ -34,9 +33,9 @@ public class ProcessorManagerController {
     }
 
     @PostMapping("/script/eval/{id}")
-    public String processorLauncher(@PathVariable(name = "id") int id) {
+    public String provideScriptProcessing(@PathVariable(name = "id") int id) {
 
-        processorManagerService.launchProcessor(id);
+        processorManagerService.launchScriptProcessing(id);
 
         return "forward:/script/result/" + id;
     }

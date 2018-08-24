@@ -23,7 +23,7 @@ public class ResultController {
         this.resultService = resultService;
     }
 
-    // for async scenario
+    // applies for async scenario
     @GetMapping("/script/result/{id}")
     public ResponseEntity<ProcessorState> getResult(@PathVariable(value = "id") int id){
 
@@ -34,7 +34,7 @@ public class ResultController {
         return ResponseEntity.ok().body(processorState);
     }
 
-    // for sync scenario
+    // applies for sync scenario
     @PostMapping("/script/result/{id}")
     public ResponseEntity<ProcessorState> postOnResultPending(@PathVariable(value = "id") int id){
 

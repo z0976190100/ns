@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-import static com.z0976190100.restingnashorn.util.AppVariables.processorsList;
+import static com.z0976190100.restingnashorn.util.PseudoDB.processorsList;
 import static java.lang.Thread.sleep;
 
 // TODO: is getResult() good enough?
@@ -24,12 +25,11 @@ public class ResultService {
         if (!processorsList.isEmpty()) {
             for (Processor processor : processorsList)
                 if (processor.getId() == id) {
-
+                    Future f = processor.getTask();
                     try {
-                        while (processor.getTask().get() != null) {
+                        while (!f.isCancelled() && !f.isDone() && f.get() != null) {
                             sleep(100);
                         }
-//                        processor.getThread().join();
                     } catch (ExecutionException | InterruptedException | CancellationException e) {
                         e.printStackTrace();
                     }

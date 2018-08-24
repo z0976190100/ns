@@ -18,7 +18,7 @@ public class ProcessorStateController {
         this.processorStateService = processorStateService;
     }
 
-    @GetMapping(value = {"/script/state/{id}", "/script/{id}"})
+    @GetMapping("/script/state/{id}")
     public ResponseEntity<ProcessorState> getProcessorState(@PathVariable(name = "id") int id) {
 
         ProcessorState processorState = processorStateService.getProcessorState(id);

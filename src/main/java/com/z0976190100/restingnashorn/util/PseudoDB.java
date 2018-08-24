@@ -10,11 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class AppVariables {
+public class PseudoDB {
 
 
 
-    public static ExecutorService processorsFixedPool = Executors.newFixedThreadPool(4);
+
 
 
     // application-scoped list of all processors
