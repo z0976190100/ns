@@ -11,6 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.ABORTED;
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.IN_QUEUE;
 import static com.z0976190100.restingnashorn.util.PseudoDB.processorSet;
 
@@ -61,7 +62,10 @@ public class ProcessorManagerService {
                                 el.getTask().cancel(true);
                             el.getThread().stop();
                         })
-                        .map(Processor::getProcessorState)
+                        .map(el -> {
+                            el.getProcessorState().setScriptStage(ABORTED);
+                            return el.getProcessorState();
+                        })
                         .findFirst();
 
         return targetProcessorState.orElse(null);

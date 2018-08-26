@@ -6,12 +6,10 @@ import com.z0976190100.restingnashorn.persistence.repo.ProcessorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import static com.z0976190100.restingnashorn.util.PseudoDB.processorsList;
 import static java.lang.Thread.sleep;
 
 // TODO: is getResult() good enough?

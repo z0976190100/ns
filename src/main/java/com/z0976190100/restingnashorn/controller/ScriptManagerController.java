@@ -4,12 +4,10 @@ import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.service.ProcessorManagerService;
 import com.z0976190100.restingnashorn.service.ScriptManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -43,7 +41,7 @@ public class ScriptManagerController {
         this.processorManagerService = processorManagerService;
     }
 
-    @PostMapping("/script")
+    @PostMapping(value = "/script", produces = MediaType.APPLICATION_JSON_VALUE)
     public String uploadClientScript(@RequestParam(name = "script") String ascript,
                                      @RequestParam(name = "async", defaultValue = "false") boolean async) {
 
@@ -65,7 +63,7 @@ public class ScriptManagerController {
 
     @PostMapping("/asyncscript/{id}")
     public ResponseEntity<Object> asyncTrue(@PathVariable(name = "id") int id,
-                                            @PathVariable(name = "async") boolean async) {
+                                            @RequestParam(name = "async") boolean async) {
 
         if (async) {
             Optional<ClientScript> targetClientScript = scriptManagerService.getScriptById(id);

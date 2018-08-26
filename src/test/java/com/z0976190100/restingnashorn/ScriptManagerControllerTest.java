@@ -14,12 +14,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -57,8 +62,13 @@ public class ScriptManagerControllerTest {
     @Test
     public void testAsyncScenarioCreatedStatus() throws Exception {
         this.mockMvc
-                .perform(post("/script?script=var script='script';'script';"))
-                .andExpect(status().isCreated());
-               // .andExpect(content().string(containsString("script")));
+                .perform(post("/script/")
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .param("script", "var script='script';script;"))// &async=true
+                .andDo(print())
+                .andExpect(status().isOk());
+               // .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                //.andExpect(jsonPath("$.result").value("script")); // isCreated());
+        //.andExpect(content().string(containsString("script")));
     }
 }
