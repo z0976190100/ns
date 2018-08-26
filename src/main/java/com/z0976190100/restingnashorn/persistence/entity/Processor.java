@@ -13,12 +13,15 @@ import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.PROC
 
 public class Processor implements Runnable {
 
+    //TODO: hash and equals
+
     private int id;
     private ScriptEngine engine;
     private ClientScript clientScript;
     private ProcessorState processorState;
     private Future task;
     private Thread thread;
+
 
 
     public Processor(ClientScript clientScript, String engineType) {
@@ -118,5 +121,26 @@ public class Processor implements Runnable {
 
     public void setTask(Future task) {
         this.task = task;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Processor)) return false;
+
+        Processor processor = (Processor) o;
+
+        return getId() == processor.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getEngine().hashCode();
+        result = 31 * result + getClientScript().hashCode();
+        result = 31 * result + getProcessorState().hashCode();
+        result = 31 * result + (getTask() != null ? getTask().hashCode() : 0);
+        result = 31 * result + (getThread() != null ? getThread().hashCode() : 0);
+        return result;
     }
 }

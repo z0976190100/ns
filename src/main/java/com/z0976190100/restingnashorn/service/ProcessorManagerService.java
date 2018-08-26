@@ -7,16 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.IN_QUEUE;
-import static com.z0976190100.restingnashorn.util.PseudoDB.*;
+import static com.z0976190100.restingnashorn.util.PseudoDB.processorSet;
 
 @Service
 public class ProcessorManagerService {
 
-    private ExecutorService processorsFixedPool = Executors.newFixedThreadPool(4);
+    private int nThreads = 4;
+
+    private ThreadPoolExecutor processorsFixedPool = new ThreadPoolExecutor(nThreads, nThreads,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
+
+
+
 
     private ScriptManagerService scriptManagerService;
 
@@ -25,15 +33,14 @@ public class ProcessorManagerService {
         this.scriptManagerService = scriptManagerService;
     }
 
-//TODO: remove launched scripts?
-
     public void launchScriptProcessing(int id) {
 
         Optional<ClientScript> targetClientScript = scriptManagerService.getScriptById(id);
 
         if (targetClientScript.isPresent()) {
             Processor processor = new Processor(targetClientScript.get(), "nashorn");
-            processorsList.add(processor);
+            processorSet.add(processor);
+           // processorsList.add(processor);
             processor.getProcessorState().setScriptStage(IN_QUEUE);
             processor.setTask(processorsFixedPool.submit(processor));
 
@@ -41,17 +48,19 @@ public class ProcessorManagerService {
     }
 
 
+
     @SuppressWarnings("deprecation")
     public ProcessorState killProcessor(int id) {
 
+
         Optional<ProcessorState> targetProcessorState =
-                processorsList.stream()
+                processorSet.stream()
                         .filter(el -> el.getId() == id)
                         .peek(el -> {
                             if (!el.getTask().isDone() && !el.getTask().isCancelled())
                                 el.getTask().cancel(true);
+                            el.getThread().stop();
                         })
-                        .peek(el -> el.getThread().stop())
                         .map(Processor::getProcessorState)
                         .findFirst();
 
