@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static com.z0976190100.restingnashorn.util.PseudoDB.processorSet;
-import static com.z0976190100.restingnashorn.util.PseudoDB.processorsList;
 
 @Service
 public class ProcessorStateService {

@@ -3,6 +3,11 @@ package com.z0976190100.restingnashorn.persistence.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class encapsulates information
+ * about <code>ClientScript</code> and <code>Processor</code>
+ * on which script runs.
+ */
 public class ProcessorState {
 
     private int processingScriptId;
@@ -11,9 +16,6 @@ public class ProcessorState {
     private Object result;
     private boolean evalDone;
 
-
-    public ProcessorState() {
-    }
 
     public ProcessorState(int processingScriptId) {
         this.processingScriptId = processingScriptId;

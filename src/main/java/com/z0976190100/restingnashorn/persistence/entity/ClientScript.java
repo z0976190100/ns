@@ -5,8 +5,6 @@ public class ClientScript {
     private int id;
     private int priority;
     private String tapestry;
-    private ScriptStage stage;
-
 
     public ClientScript(String tapestry){
         this.tapestry = tapestry;
@@ -36,11 +34,4 @@ public class ClientScript {
         this.tapestry = tapestry;
     }
 
-    public ScriptStage getStage() {
-        return stage;
-    }
-
-    public void setStage(ScriptStage stage) {
-        this.stage = stage;
-    }
 }

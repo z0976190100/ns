@@ -3,12 +3,9 @@ package com.z0976190100.restingnashorn.persistence.entity;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
 import java.util.concurrent.Future;
 
-import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.AFTER_EVALUATION;
-import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.ERROR_OF_EVALUATION;
-import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.PROCESSING_EVALUATION;
+import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.*;
 
 
 public class Processor implements Runnable {

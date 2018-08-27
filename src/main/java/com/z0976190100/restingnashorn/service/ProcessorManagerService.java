@@ -3,6 +3,7 @@ package com.z0976190100.restingnashorn.service;
 import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
 import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
+import com.z0976190100.restingnashorn.persistence.repo.ProcessorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,14 @@ public class ProcessorManagerService {
             new LinkedBlockingQueue<Runnable>());
 
 
-
-
     private ScriptManagerService scriptManagerService;
+    private ProcessorRepo processorRepo;
 
     @Autowired
-    public ProcessorManagerService(ScriptManagerService scriptManagerService) {
+    public ProcessorManagerService(ScriptManagerService scriptManagerService,
+                                   ProcessorRepo processorRepo) {
         this.scriptManagerService = scriptManagerService;
+        this.processorRepo = processorRepo;
     }
 
     public void launchScriptProcessing(int id) {
@@ -41,7 +43,6 @@ public class ProcessorManagerService {
         if (targetClientScript.isPresent()) {
             Processor processor = new Processor(targetClientScript.get(), "nashorn");
             processorSet.add(processor);
-           // processorsList.add(processor);
             processor.getProcessorState().setScriptStage(IN_QUEUE);
             processor.setTask(processorsFixedPool.submit(processor));
 
@@ -49,26 +50,37 @@ public class ProcessorManagerService {
     }
 
 
-
     @SuppressWarnings("deprecation")
     public ProcessorState killProcessor(int id) {
 
+        Processor targetProcessor = processorRepo.getProcessorById(id);
 
-        Optional<ProcessorState> targetProcessorState =
-                processorSet.stream()
-                        .filter(el -> el.getId() == id)
-                        .peek(el -> {
-                            if (!el.getTask().isDone() && !el.getTask().isCancelled())
-                                el.getTask().cancel(true);
-                            el.getThread().stop();
-                        })
-                        .map(el -> {
-                            el.getProcessorState().setScriptStage(ABORTED);
-                            return el.getProcessorState();
-                        })
-                        .findFirst();
+        if (targetProcessor != null && !targetProcessor.getTask().isDone() && !targetProcessor.getTask().isCancelled()) {
 
-        return targetProcessorState.orElse(null);
+            targetProcessor.getTask().cancel(true);
+            targetProcessor.getThread().stop();
+            targetProcessor.getProcessorState().setScriptStage(ABORTED);
+
+            return processorRepo.remove(targetProcessor).getProcessorState();
+
+        }
+
+        return null;
+
+
+//        Optional<Processor> targetProcessorState =
+//                processorSet.stream()
+//                        .filter(el -> el.getId() == id)
+//                        .map(el -> {
+//                            if (!el.getTask().isDone() && !el.getTask().isCancelled())
+//                                el.getTask().cancel(true);
+//                            el.getThread().stop();
+//                            el.getProcessorState().setScriptStage(ABORTED);
+//                            return el;
+//                        })
+//                        .findFirst();
+//
+//        return targetProcessorState.orElse(null);
 
     }
 }

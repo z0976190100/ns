@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.z0976190100.restingnashorn.util.PseudoDB.scriptsToProceed;
-
 @Service
 public class ScriptManagerService {
 
