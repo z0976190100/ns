@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
  * As result of creating and launching a task in
  * <code>ProcessorManagerService</code> appears an instance
  * of <code>Processor</code>
- * witch owns an instance of <code>ProcessorState</code>
- * convenient class for monitoring state of evaluation process
+ * witch owns an instance of <code>ProcessorState</code>,
+ * a convenient class for monitoring state of evaluation process
  * of script.
  * This controller serves for purposes of state retrieving.
  */

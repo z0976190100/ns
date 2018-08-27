@@ -54,8 +54,8 @@ public class ResultController {
         if (async) {
             location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(id)
+                    .path("")
+                    .build()
                     .toUri();
             return ResponseEntity.created(location).build();
         }

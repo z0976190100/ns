@@ -4,6 +4,7 @@ import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import com.z0976190100.restingnashorn.service.ProcessorManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ import java.net.URI;
  * #
  */
 
-@RestController
+@Controller
 public class ProcessorManagerController {
 
     private ProcessorManagerService processorManagerService;

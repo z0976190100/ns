@@ -6,6 +6,7 @@ import com.z0976190100.restingnashorn.service.ScriptManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,7 +26,7 @@ import java.util.Optional;
  **/
 
 
-@RestController
+@Controller
 public class ScriptManagerController {
 
     private ScriptManagerService scriptManagerService;
@@ -35,7 +36,7 @@ public class ScriptManagerController {
         this.scriptManagerService = scriptManagerService;
     }
 
-    @PostMapping(value = "/script", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/script")
     public String uploadClientScript(@RequestParam(name = "script") String ascript) {
 
         ClientScript clientScript = scriptManagerService.buildScript(ascript);
