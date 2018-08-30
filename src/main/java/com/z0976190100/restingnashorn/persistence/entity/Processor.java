@@ -10,8 +10,6 @@ import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.*;
 
 public class Processor implements Runnable {
 
-    //TODO: hash and equals
-
     private int id;
     private ScriptEngine engine;
     private ClientScript clientScript;
@@ -40,16 +38,14 @@ public class Processor implements Runnable {
             processorState.setScriptStage(AFTER_EVALUATION);
             processorState.setResult(result);
             processorState.setEvalDone(true);
-//            doNotifyAll();
         } catch (ScriptException e) {
             processorState.setScriptStage(ERROR_OF_EVALUATION);
             processorState.log(e.getMessage());
             processorState.setEvalDone(true);
             e.printStackTrace();
-            // just for fun
         } catch (ThreadDeath e) {
             System.err.println("------- OUCH!!!------");
-            throw new ThreadDeath();
+            throw e;
         }
     }
 
