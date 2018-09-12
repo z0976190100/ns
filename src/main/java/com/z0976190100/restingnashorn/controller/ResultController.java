@@ -24,6 +24,7 @@ import java.net.URI;
  */
 
 @RestController
+@RequestMapping("/results")
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ResultController {
 
@@ -36,7 +37,7 @@ public class ResultController {
     }
 
 
-    @GetMapping("/script/result/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProcessorState> getResult(@PathVariable(value = "id") int id){
 
         ProcessorState processorState = resultService.getResult(id);
@@ -47,7 +48,7 @@ public class ResultController {
     }
 
 
-    @PostMapping("/script/result/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<ProcessorState> postOnResultPending(@PathVariable(value = "id") int id,
                                                               @RequestParam(name = "async", defaultValue = "false") boolean async){
 

@@ -1,12 +1,12 @@
 package com.z0976190100.restingnashorn.persistence.entity;
 
-public class ClientScript {
+public class Script {
 
     private int id;
     private int priority;
     private String tapestry;
 
-    public ClientScript(String tapestry){
+    public Script(String tapestry){
         this.tapestry = tapestry;
     }
 

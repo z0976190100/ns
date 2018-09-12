@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Class encapsulates information
- * about <code>ClientScript</code> and <code>Processor</code>
+ * about <code>Script</code> and <code>Processor</code>
  * on which script runs.
  *
  *

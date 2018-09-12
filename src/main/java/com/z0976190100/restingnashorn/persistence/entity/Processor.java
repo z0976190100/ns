@@ -12,18 +12,18 @@ public class Processor implements Runnable {
 
     private int id;
     private ScriptEngine engine;
-    private ClientScript clientScript;
+    private Script script;
     private ProcessorState processorState;
     private Future task;
     private Thread thread;
 
 
 
-    public Processor(ClientScript clientScript, String engineType) {
-        this.id = clientScript.getId();
+    public Processor(Script script, String engineType) {
+        this.id = script.getId();
         this.processorState = new ProcessorState(id);
         this.engine = new ScriptEngineManager().getEngineByName(engineType);
-        this.clientScript = clientScript;
+        this.script = script;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Processor implements Runnable {
 
         try {
             thread = Thread.currentThread();
-            String scriptTapestry = modifyScriptTapestry(clientScript.getTapestry(), "print");
+            String scriptTapestry = modifyScriptTapestry(script.getTapestry(), "print");
             engine.put("console", processorState);
             processorState.setScriptStage(PROCESSING_EVALUATION);
             Object result = String.valueOf(engine.eval(scriptTapestry));
@@ -68,7 +68,7 @@ public class Processor implements Runnable {
         return modScript;
     }
 
-    public ProcessorState getProcessorState() {
+    public synchronized ProcessorState getProcessorState() {
         return processorState;
     }
 
@@ -88,12 +88,12 @@ public class Processor implements Runnable {
         this.engine = engine;
     }
 
-    public ClientScript getClientScript() {
-        return clientScript;
+    public Script getScript() {
+        return script;
     }
 
-    public void setClientScript(ClientScript clientScript) {
-        this.clientScript = clientScript;
+    public void setScript(Script script) {
+        this.script = script;
     }
 
     public void setProcessorState(ProcessorState processorState) {
@@ -128,12 +128,8 @@ public class Processor implements Runnable {
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getEngine().hashCode();
-        result = 31 * result + getClientScript().hashCode();
-        result = 31 * result + getProcessorState().hashCode();
-        result = 31 * result + (getTask() != null ? getTask().hashCode() : 0);
-        result = 31 * result + (getThread() != null ? getThread().hashCode() : 0);
+        int result = getId() ^ (getId() >>> 32);
+        result = 31 * result ;
         return result;
     }
 }

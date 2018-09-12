@@ -1,6 +1,6 @@
 package com.z0976190100.restingnashorn.service;
 
-import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
+import com.z0976190100.restingnashorn.persistence.entity.Script;
 import com.z0976190100.restingnashorn.persistence.repo.ScriptRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,21 +18,21 @@ public class ScriptManagerService {
         this.scriptRepo = scriptRepo;
     }
 
-    public ClientScript buildScript(String ascript) {
-        return new ClientScript(ascript);
+    public Script buildScript(String ascript) {
+        return new Script(ascript);
     }
 
-    public void registerScript(ClientScript clientScript) {
+    public void registerScript(Script script) {
 
-        scriptRepo.addScript(clientScript);
+        scriptRepo.addScript(script);
 
     }
 
-    public Optional<ClientScript> getScriptById(int id){
+    public Optional<Script> getScriptById(int id){
         return scriptRepo.getScriptById(id);
     }
 
-    public List<ClientScript> getAllscripts(){
+    public List<Script> getAllscripts(){
         return scriptRepo.getAllscripts();
     }
 }

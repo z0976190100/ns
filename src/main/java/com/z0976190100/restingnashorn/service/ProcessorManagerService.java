@@ -1,6 +1,6 @@
 package com.z0976190100.restingnashorn.service;
 
-import com.z0976190100.restingnashorn.persistence.entity.ClientScript;
+import com.z0976190100.restingnashorn.persistence.entity.Script;
 import com.z0976190100.restingnashorn.persistence.entity.Processor;
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
 import com.z0976190100.restingnashorn.persistence.repo.ProcessorRepo;
@@ -38,7 +38,7 @@ public class ProcessorManagerService {
 
     public void launchScriptProcessing(int id) {
 
-        Optional<ClientScript> targetClientScript = scriptManagerService.getScriptById(id);
+        Optional<Script> targetClientScript = scriptManagerService.getScriptById(id);
 
         if (targetClientScript.isPresent()) {
             Processor processor = new Processor(targetClientScript.get(), "nashorn");
