@@ -1,6 +1,6 @@
 # resting-nashorn
 
-Backend javascript code evaluation, executing by Nashorn JVM engine.
+Backend javascript code evaluation, executing by Nashorn engine.
 
 Application provides two scenarios of client interaction with backend: syncronized and async.
 
