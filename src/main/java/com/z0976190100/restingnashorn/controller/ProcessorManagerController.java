@@ -1,3 +1,4 @@
+/*
 package com.z0976190100.restingnashorn.controller;
 
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+*/
 /**
  * Controller is responsible for launching a task
  * of script processing.
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
  * processing lifecycle:
  * # termination of evaluation
  * #
- */
+ *//*
+
 
 @Controller
 public class ProcessorManagerController {
@@ -45,3 +48,4 @@ public class ProcessorManagerController {
 
     }
 }
+*/

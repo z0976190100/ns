@@ -1,20 +1,19 @@
+/*
 package com.z0976190100.restingnashorn;
 
 import com.z0976190100.restingnashorn.controller.ProcessorManagerController;
 import com.z0976190100.restingnashorn.controller.ProcessorStateController;
 import com.z0976190100.restingnashorn.controller.ResultController;
-import com.z0976190100.restingnashorn.controller.ScriptManagerController;
-import com.z0976190100.restingnashorn.service.ProcessorManagerService;
+import com.z0976190100.restingnashorn.controller.ScriptController;
+import com.z0976190100.restingnashorn.service.ProcessorService;
 import com.z0976190100.restingnashorn.service.ProcessorStateService;
 import com.z0976190100.restingnashorn.service.ResultService;
 import com.z0976190100.restingnashorn.service.ScriptManagerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,7 +30,7 @@ public class ResultControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ScriptManagerController scriptManagerController;
+    private ScriptController scriptController;
 
     @MockBean
     private ProcessorManagerController processorManagerController;
@@ -40,7 +39,7 @@ public class ResultControllerTest {
     private ScriptManagerService scriptManagerService;
 
     @MockBean
-    private ProcessorManagerService processorManagerService;
+    private ProcessorService processorService;
 
     @MockBean
     private ProcessorStateController processorStateController;
@@ -70,3 +69,4 @@ public class ResultControllerTest {
     }
 
 }
+*/

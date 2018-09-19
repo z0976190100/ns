@@ -1,3 +1,4 @@
+/*
 package com.z0976190100.restingnashorn.controller;
 
 import com.z0976190100.restingnashorn.persistence.entity.ProcessorState;
@@ -8,15 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+*/
 /**
  * As result of creating and launching a task in
  * <code>ProcessorManagerService</code> appears an instance
  * of <code>Processor</code>
- * witch owns an instance of <code>ProcessorState</code>,
+ * which owns an instance of <code>ProcessorState</code>,
  * a convenient class for monitoring state of evaluation process
  * of script.
  * This controller serves for purposes of state retrieving.
- */
+ *//*
+
 
 
 @RestController
@@ -37,3 +40,4 @@ public class ProcessorStateController {
        return processorState == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(processorState);
     }
 }
+*/

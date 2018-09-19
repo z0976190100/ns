@@ -3,7 +3,7 @@ package com.z0976190100.restingnashorn;
 import com.z0976190100.restingnashorn.controller.ProcessorManagerController;
 import com.z0976190100.restingnashorn.controller.ProcessorStateController;
 import com.z0976190100.restingnashorn.controller.ResultController;
-import com.z0976190100.restingnashorn.controller.ScriptManagerController;
+import com.z0976190100.restingnashorn.controller.ScriptController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class RestingNashornApplicationTests {
 
     @Autowired
-    private ScriptManagerController scriptManagerController;
+    private ScriptController scriptController;
     @Autowired
     private ProcessorManagerController processorManagerController;
     @Autowired
@@ -28,7 +28,7 @@ public class RestingNashornApplicationTests {
 
     @Test
     public void contextLoads() {
-        assertThat(scriptManagerController).isNotNull();
+        assertThat(scriptController).isNotNull();
         assertThat(processorManagerController).isNotNull();
         assertThat(processorStateController).isNotNull();
         assertThat(resultController).isNotNull();

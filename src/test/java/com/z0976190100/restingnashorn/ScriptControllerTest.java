@@ -1,14 +1,14 @@
+/*
 package com.z0976190100.restingnashorn;
 
 import com.z0976190100.restingnashorn.controller.ProcessorManagerController;
 import com.z0976190100.restingnashorn.controller.ProcessorStateController;
 import com.z0976190100.restingnashorn.controller.ResultController;
-import com.z0976190100.restingnashorn.controller.ScriptManagerController;
-import com.z0976190100.restingnashorn.service.ProcessorManagerService;
+import com.z0976190100.restingnashorn.controller.ScriptController;
+import com.z0976190100.restingnashorn.service.ProcessorService;
 import com.z0976190100.restingnashorn.service.ProcessorStateService;
 import com.z0976190100.restingnashorn.service.ResultService;
 import com.z0976190100.restingnashorn.service.ScriptManagerService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +17,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ScriptManagerController.class)
-public class ScriptManagerControllerTest {
+@WebMvcTest(ScriptController.class)
+public class ScriptControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ScriptManagerController scriptManagerController;
+    private ScriptController scriptController;
 
     @MockBean
     private ProcessorManagerController processorManagerController;
@@ -44,7 +40,7 @@ public class ScriptManagerControllerTest {
     private ScriptManagerService scriptManagerService;
 
     @MockBean
-    private ProcessorManagerService processorManagerService;
+    private ProcessorService processorService;
 
     @MockBean
     private ProcessorStateController processorStateController;
@@ -71,4 +67,4 @@ public class ScriptManagerControllerTest {
                 //.andExpect(jsonPath("$.result").value("script")); // isCreated());
         //.andExpect(content().string(containsString("script")));
     }
-}
+}*/

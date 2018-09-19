@@ -17,7 +17,7 @@ import static com.z0976190100.restingnashorn.persistence.entity.ScriptStage.IN_Q
 import static com.z0976190100.restingnashorn.util.PseudoDB.processorSet;
 
 @Service
-public class ProcessorManagerService {
+public class ProcessorService {
 
     private int nThreads = 4;
 
@@ -30,8 +30,8 @@ public class ProcessorManagerService {
     private ProcessorRepo processorRepo;
 
     @Autowired
-    public ProcessorManagerService(ScriptManagerService scriptManagerService,
-                                   ProcessorRepo processorRepo) {
+    public ProcessorService(ScriptManagerService scriptManagerService,
+                            ProcessorRepo processorRepo) {
         this.scriptManagerService = scriptManagerService;
         this.processorRepo = processorRepo;
     }

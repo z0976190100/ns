@@ -12,11 +12,11 @@ import static com.z0976190100.restingnashorn.util.PseudoDB.processorSet;
 @Service
 public class ProcessorStateService {
 
-    private ProcessorManagerService processorManagerService;
+    private ProcessorService processorService;
 
     @Autowired
-    ProcessorStateService(ProcessorManagerService processorManagerService){
-        this.processorManagerService = processorManagerService;
+    ProcessorStateService(ProcessorService processorService){
+        this.processorService = processorService;
     }
 
     public ProcessorState getProcessorState(int id) {
